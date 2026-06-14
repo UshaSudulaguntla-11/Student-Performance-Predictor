@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduPulse | Student Performance Analytics & Predictor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo-area">
+                <div class="logo-icon">
+                    <i data-lucide="graduation-cap"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>EduPulse</h1>
+                    <span>Student Insights Platform</span>
+                </div>
+            </div>
+            <nav class="app-nav">
+                <button class="nav-btn active" data-tab="predictor">
+                    <i data-lucide="sliders-horizontal"></i>
+                    <span>Predictor Dashboard</span>
+                </button>
+                <button class="nav-btn" data-tab="insights">
+                    <i data-lucide="bar-chart-3"></i>
+                    <span>Analytics & Trends</span>
+                </button>
+                <button class="nav-btn" data-tab="profiles">
+                    <i data-lucide="users"></i>
+                    <span>Classroom Profiles</span>
+                    <span class="badge" id="profiles-count">0</span>
+                </button>
+            </nav>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="app-main">
+            <!-- 1. PREDICTOR TAB -->
+            <section id="tab-predictor" class="tab-content active">
+                <div class="predictor-grid">
+                    <!-- Configurator Panel -->
+                    <div class="config-panel glass-card">
+                        <div class="panel-header">
+                            <i data-lucide="settings"></i>
+                            <h2>Performance Factors Configurator</h2>
+                        </div>
+                        <p class="panel-desc">Adjust the variables below to simulate a student's profile. Predictions update automatically.</p>
+                        
+                        <div class="presets-quick-bar">
+                            <span class="label">Quick Presets:</span>
+                            <div class="presets-buttons">
+                                <button class="preset-btn" data-preset="overachiever">Honor Student</button>
+                                <button class="preset-btn" data-preset="average">Average Performer</button>
+                                <button class="preset-btn" data-preset="struggling">Struggling but Motivated</button>
+                                <button class="preset-btn" data-preset="absentee">High Risk (Absentee)</button>
+                            </div>
+                        </div>
+
+                        <div class="accordion">
+                            <!-- Section 1: Academic Inputs -->
+                            <div class="accordion-item expanded">
+                                <button class="accordion-trigger">
+                                    <div class="trigger-label">
+                                        <i data-lucide="book-open"></i>
+                                        <span>Academic Habits & Scores</span>
+                                    </div>
+                                    <i data-lucide="chevron-down" class="chevron"></i>
+                                </button>
+                                <div class="accordion-content">
+                                    <div class="input-grid">
+                                        <!-- Study Hours -->
+                                        <div class="input-group">
+                                            <div class="input-label-row">
+                                                <label for="input-hours">Weekly Study Hours</label>
+                                                <span class="value-display" id="val-hours">20 hrs</span>
+                                            </div>
+                                            <div class="range-container">
+                                                <input type="range" id="input-hours" min="1" max="44" value="20" class="custom-slider">
+                                                <div class="slider-bounds"><span>1h</span><span>44h</span></div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Attendance -->
+                                        <div class="input-group">
+                                            <div class="input-label-row">
+                                                <label for="input-attendance">School Attendance Rate</label>
+                                                <span class="value-display" id="val-attendance">80%</span>
+                                            </div>
+                                            <div class="range-container">
+                                                <input type="range" id="input-attendance" min="60" max="100" value="80" class="custom-slider">
+                                                <div class="slider-bounds"><span>60%</span><span>100%</span></div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Previous Scores -->
+                                        <div class="input-group">
+                                            <div class="input-label-row">
+                                                <label for="input-prev-score">Previous Exam Scores</label>
+                                                <span class="value-display" id="val-prev-score">75 / 100</span>
+                                            </div>
+                                            <div class="range-container">
+                                                <input type="range" id="input-prev-score" min="50" max="100" value="75" class="custom-slider">
+                                                <div class="slider-bounds"><span>50</span><span>100</span></div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Tutoring Sessions -->
+                                        <div class="input-group">
+                                            <div class="input-label-row">
+                                                <label for="input-tutoring">Monthly Tutoring Sessions</label>
+                                                <span class="value-display" id="val-tutoring">1 session</span>
+                                            </div>
+                                            <div class="range-container">
+                                                <input type="range" id="input-tutoring" min="0" max="8" value="1" class="custom-slider">
+                                                <div class="slider-bounds"><span>0</span><span>8</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Section 2: Environment & Social -->
+                            <div class="accordion-item">
+                                <button class="accordion-trigger">
+                                    <div class="trigger-label">
+                                        <i data-lucide="landmark"></i>
+                                        <span>Environment & Family Environment</span>
+                                    </div>
+                                    <i data-lucide="chevron-down" class="chevron"></i>
+                                </button>
+                                <div class="accordion-content">
+                                    <div class="select-grid">
+                                        <!-- Parental Involvement -->
+                                        <div class="input-group">
+                                            <label for="input-parental-involvement">Parental Involvement</label>
+                                            <select id="input-parental-involvement" class="custom-select">
+                                                <option value="High">High</option>
+                                                <option value="Medium" selected>Medium</option>
+                                                <option value="Low">Low</option>
+                                            </select>
+                                        </div>
+
+                                        <!-- Access to Resources -->
+                                        <div class="input-group">
+                                            <label for="input-resources">Access to Learning Resources</label>
+                                            <select id="input-resources" class="custom-select">
+                                                <option value="High">High</option>
+                                                <option value="Medium" selected>Medium</option>
+                                                <option value="Low">Low</option>
+                                            </select>
+                                        </div>
+
+                                        <!-- Motivation Level -->
+                                        <div class="input-group">
+                                            <label for="input-motivation">Motivation Level</label>
+                                            <select id="input-motivation" class="custom-select">
+                                                <option value="High">High</option>
+                                                <option value="Medium" selected>Medium</option>
+                                                <option value="Low">Low</option>
+                                            </select>
+                                        </div>
+
+                                        <!-- Peer Influence -->
+                                        <div class="input-group">
+                                            <label for="input-peer">Peer Influence</label>
+                                            <select id="input-peer" class="custom-select">
+                                                <option value="Positive">Positive</option>
+                                                <option value="Neutral" selected>Neutral</option>
+                                                <option value="Negative">Negative</option>
+                                            </select>
+                                        </div>
+
+                                        <!-- Family Income -->
+                                        <div class="input-group">
+                                            <label for="input-income">Family Income Level</label>
+                                            <select id="input-income" class="custom-select">
+                                                <option value="High">High</option>
+                                                <option value="Medium" selected>Medium</option>
+                                                <option value="Low">Low</option>
+                                            </select>
+                                        </div>
+
+                                        <!-- Teacher Quality -->
+                                        <div class="input-group">
+                                            <label for="input-teacher">Teacher Quality</label>
+                                            <select id="input-teacher" class="custom-select">
+                                                <option value="High">High</option>
+                                                <option value="Medium" selected>Medium</option>
+                                                <option value="Low">Low</option>
+                                            </select>
+                                        </div>
+
+                                        <!-- School Type -->
+                                        <div class="input-group">
+                                            <label for="input-school">School Type</label>
+                                            <select id="input-school" class="custom-select">
+                                                <option value="Public" selected>Public</option>
+                                                <option value="Private">Private</option>
+                                            </select>
+                                        </div>
+
+                                        <!-- Distance from Home -->
+                                        <div class="input-group">
+                                            <label for="input-distance">Distance from Home</label>
+                                            <select id="input-distance" class="custom-select">
+                                                <option value="Near" selected>Near</option>
+                                                <option value="Moderate">Moderate</option>
+                                                <option value="Far">Far</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Section 3: Health & Demographics -->
+                            <div class="accordion-item">
+                                <button class="accordion-trigger">
+                                    <div class="trigger-label">
+                                        <i data-lucide="heart-pulse"></i>
+                                        <span>Personal & Demographics</span>
+                                    </div>
+                                    <i data-lucide="chevron-down" class="chevron"></i>
+                                </button>
+                                <div class="accordion-content">
+                                    <div class="input-grid">
+                                        <!-- Sleep Hours -->
+                                        <div class="input-group">
+                                            <div class="input-label-row">
+                                                <label for="input-sleep">Average Daily Sleep Hours</label>
+                                                <span class="value-display" id="val-sleep">7 hrs</span>
+                                            </div>
+                                            <div class="range-container">
+                                                <input type="range" id="input-sleep" min="4" max="10" value="7" class="custom-slider">
+                                                <div class="slider-bounds"><span>4h</span><span>10h</span></div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Physical Activity -->
+                                        <div class="input-group">
+                                            <div class="input-label-row">
+                                                <label for="input-physical">Weekly Physical Activity</label>
+                                                <span class="value-display" id="val-physical">3 hrs</span>
+                                            </div>
+                                            <div class="range-container">
+                                                <input type="range" id="input-physical" min="0" max="6" value="3" class="custom-slider">
+                                                <div class="slider-bounds"><span>0h</span><span>6h</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="select-grid" style="margin-top: 1rem;">
+                                        <!-- Extracurricular Activities -->
+                                        <div class="input-group">
+                                            <label for="input-extracurricular">Extracurricular Activities</label>
+                                            <select id="input-extracurricular" class="custom-select">
+                                                <option value="Yes" selected>Yes</option>
+                                                <option value="No">No</option>
+                                            </select>
+                                        </div>
+
+                                        <!-- Learning Disabilities -->
+                                        <div class="input-group">
+                                            <label for="input-disability">Learning Disability</label>
+                                            <select id="input-disability" class="custom-select">
+                                                <option value="No" selected>No</option>
+                                                <option value="Yes">Yes</option>
+                                            </select>
+                                        </div>
+
+                                        <!-- Internet Access -->
+                                        <div class="input-group">
+                                            <label for="input-internet">Internet Access</label>
+                                            <select id="input-internet" class="custom-select">
+                                                <option value="Yes" selected>Yes</option>
+                                                <option value="No">No</option>
+                                            </select>
+                                        </div>
+
+                                        <!-- Parental Education Level -->
+                                        <div class="input-group">
+                                            <label for="input-parental-edu">Parental Education Level</label>
+                                            <select id="input-parental-edu" class="custom-select">
+                                                <option value="High School">High School</option>
+                                                <option value="College" selected>College</option>
+                                                <option value="Postgraduate">Postgraduate</option>
+                                            </select>
+                                        </div>
+
+                                        <!-- Gender -->
+                                        <div class="input-group">
+                                            <label for="input-gender">Gender</label>
+                                            <select id="input-gender" class="custom-select">
+                                                <option value="Female">Female</option>
+                                                <option value="Male" selected>Male</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Live Predictor Gauge & Results Panel -->
+                    <div class="results-panel">
+                        <!-- Score Display Card -->
+                        <div class="glass-card result-card glow-card">
+                            <div class="result-layout">
+                                <div class="gauge-wrapper">
+                                    <svg class="radial-gauge" viewBox="0 0 160 160">
+                                        <circle class="gauge-track" cx="80" cy="80" r="70" />
+                                        <circle class="gauge-fill" id="score-gauge-fill" cx="80" cy="80" r="70" stroke-dasharray="439.823" stroke-dashoffset="440" />
+                                    </svg>
+                                    <div class="gauge-text-overlay">
+                                        <span class="score-num" id="predicted-score-val">--</span>
+                                        <span class="score-label">Predicted Exam Score</span>
+                                    </div>
+                                </div>
+                                <div class="score-assessment">
+                                    <div class="badge-row">
+                                        <span class="assessment-badge" id="score-badge">Calculating</span>
+                                    </div>
+                                    <p class="assessment-text" id="score-summary-desc">Adjust variables on the left to compute the student's predicted academic score.</p>
+                                    
+                                    <!-- Saved Profiles Mini Form -->
+                                    <div class="save-profile-form">
+                                        <input type="text" id="save-student-name" placeholder="Enter student name..." class="custom-input">
+                                        <button id="btn-save-profile" class="primary-btn">
+                                            <i data-lucide="plus-circle"></i>
+                                            <span>Save Profile</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- What-if analysis contributions -->
+                        <div class="glass-card analysis-card">
+                            <div class="card-header">
+                                <i data-lucide="sparkles" class="purple-icon"></i>
+                                <h3>Key Drivers & What-If Analysis</h3>
+                            </div>
+                            <div class="drivers-container">
+                                <div class="driver-column positive">
+                                    <h4><i data-lucide="trending-up"></i> Top Strengths</h4>
+                                    <ul id="list-strengths">
+                                        <li class="empty-list">Configure variables to analyze...</li>
+                                    </ul>
+                                </div>
+                                <div class="driver-column negative">
+                                    <h4><i data-lucide="trending-down"></i> Growth Opportunities</h4>
+                                    <ul id="list-weaknesses">
+                                        <li class="empty-list">Configure variables to analyze...</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Recommendations Engine -->
+                        <div class="glass-card recommendations-card">
+                            <div class="card-header">
+                                <i data-lucide="lightbulb" class="yellow-icon"></i>
+                                <h3>Personalized Recommendations Engine</h3>
+                            </div>
+                            <div class="recommendations-container" id="recs-list">
+                                <div class="rec-item info">
+                                    <div class="rec-icon"><i data-lucide="info"></i></div>
+                                    <div class="rec-content">
+                                        <h5>Real-time Recommendations</h5>
+                                        <p>Adjust features like attendance, study hours, and tutoring to view actionable strategies with predicted grade impact.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. ANALYTICS & INSIGHTS TAB -->
+            <section id="tab-insights" class="tab-content">
+                <div class="insights-grid-layout">
+                    <!-- Top stats cards -->
+                    <div class="stats-row">
+                        <div class="glass-card stat-widget">
+                            <span class="stat-label">Model R-Squared (R²)</span>
+                            <span class="stat-value">71.48%</span>
+                            <span class="stat-trend positive"><i data-lucide="trending-up"></i> High predictive fit</span>
+                        </div>
+                        <div class="glass-card stat-widget">
+                            <span class="stat-label">Model Mean Absolute Error (MAE)</span>
+                            <span class="stat-value">0.78</span>
+                            <span class="stat-trend neutral">Variance of ~0.78 points</span>
+                        </div>
+                        <div class="glass-card stat-widget">
+                            <span class="stat-label">Most Critical Factor</span>
+                            <span class="stat-value text-indigo">Attendance</span>
+                            <span class="stat-trend positive"><i data-lucide="activity"></i> 38.0% importance</span>
+                        </div>
+                        <div class="glass-card stat-widget">
+                            <span class="stat-label">Secondary Factor</span>
+                            <span class="stat-value text-purple">Study Hours</span>
+                            <span class="stat-trend positive"><i data-lucide="clock"></i> 24.2% importance</span>
+                        </div>
+                    </div>
+
+                    <!-- Charts Row -->
+                    <div class="charts-row">
+                        <!-- Chart 1: Feature Importance -->
+                        <div class="glass-card chart-card">
+                            <div class="card-header">
+                                <i data-lucide="pie-chart"></i>
+                                <h3>Random Forest Feature Importance (%)</h3>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="chart-importance"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Chart 2: Correlation Matrix -->
+                        <div class="glass-card chart-card">
+                            <div class="card-header">
+                                <i data-lucide="git-merge"></i>
+                                <h3>Key Factors Correlation with Exam Score</h3>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="chart-correlations"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Insight Details card -->
+                    <div class="glass-card report-card">
+                        <div class="card-header">
+                            <i data-lucide="file-text"></i>
+                            <h2>Academic Success Drivers Report</h2>
+                        </div>
+                        <div class="report-content-grid">
+                            <div class="report-paragraph">
+                                <h3><span class="num-bullet">1</span> Attendance is the Foundation</h3>
+                                <p>An attendance rate increase from 60% to 100% generates a massive predicted score gain of <strong>+7.91 points</strong>. In class attendance accounts for 38% of overall student performance variation. Absenteeism isolates students from curriculum context and tutoring reinforcement.</p>
+                            </div>
+                            <div class="report-paragraph">
+                                <h3><span class="num-bullet">2</span> Weekly Study Time Yields Large Returns</h3>
+                                <p>Every single hour dedicated to studying boosts exam scores by <strong>+0.29 points</strong>. Moving from a low weekly study rate (5 hours) to a highly focused study schedule (30 hours) returns an estimated <strong>+7.2 points</strong>. Combining study habits with high attendance offers the highest compounded grade outcome.</p>
+                            </div>
+                            <div class="report-paragraph">
+                                <h3><span class="num-bullet">3</span> The Direct Value of Tutoring & Support</h3>
+                                <p>Enrolling a student in tutoring sessions has a highly significant linear coefficient of <strong>+0.50 points per session</strong>. A full tutoring schedule of 8 sessions per month contributes an estimated <strong>+4.0 points</strong>, serving as an effective intervention strategy for struggling learners.</p>
+                            </div>
+                            <div class="report-paragraph">
+                                <h3><span class="num-bullet">4</span> Internet & Resources Boost Equity</h3>
+                                <p>Providing internet access to a student adds <strong>+0.97 points</strong>, which represents the highest digital factor in the model. Additionally, access to learning resources represents a significant gap—students with low resources face a penalty of <strong>-0.40 points</strong> relative to high resource access.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. SAVED PROFILES TAB -->
+            <section id="tab-profiles" class="tab-content">
+                <div class="profiles-section-layout">
+                    <div class="profiles-header-row">
+                        <div class="profiles-header-title">
+                            <h2>Classroom Profiles Registry</h2>
+                            <p>Manage and compare saved student profiles. The data is saved in your local web browser.</p>
+                        </div>
+                        <div class="profiles-actions">
+                            <button id="btn-export-profiles" class="secondary-btn">
+                                <i data-lucide="download"></i>
+                                <span>Export (JSON)</span>
+                            </button>
+                            <button id="btn-clear-profiles" class="danger-btn">
+                                <i data-lucide="trash-2"></i>
+                                <span>Clear Registry</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Grid of student profiles -->
+                    <div id="saved-profiles-grid" class="profiles-cards-grid">
+                        <!-- Dynamically filled -->
+                        <div class="empty-state-card glass-card">
+                            <i data-lucide="users" class="empty-icon"></i>
+                            <h3>No Profiles Saved Yet</h3>
+                            <p>Use the Predictor Dashboard to configure student values, enter a name, and save the profile here.</p>
+                            <button class="primary-btn" onclick="switchTab('predictor')">Go to Predictor</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Toast Notifications -->
+        <div id="toast-container" class="toast-container"></div>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>&copy; 2026 EduPulse Analytics System. Powered by Linear Regression & Random Forest modeling on Student Performance Factors.</p>
+        </footer>
+    </div>
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

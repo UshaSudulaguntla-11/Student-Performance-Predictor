@@ -1,0 +1,112 @@
+{
+  "feature_order": [
+    "Hours_Studied",
+    "Attendance",
+    "Parental_Involvement",
+    "Access_to_Resources",
+    "Extracurricular_Activities",
+    "Sleep_Hours",
+    "Previous_Scores",
+    "Motivation_Level",
+    "Internet_Access",
+    "Tutoring_Sessions",
+    "Family_Income",
+    "Teacher_Quality",
+    "School_Type",
+    "Peer_Influence",
+    "Physical_Activity",
+    "Learning_Disabilities",
+    "Parental_Education_Level",
+    "Distance_from_Home",
+    "Gender"
+  ],
+  "categorical_mappings": {
+    "Parental_Involvement": {
+      "High": 0,
+      "Low": 1,
+      "Medium": 2
+    },
+    "Access_to_Resources": {
+      "High": 0,
+      "Low": 1,
+      "Medium": 2
+    },
+    "Extracurricular_Activities": {
+      "No": 0,
+      "Yes": 1
+    },
+    "Motivation_Level": {
+      "High": 0,
+      "Low": 1,
+      "Medium": 2
+    },
+    "Internet_Access": {
+      "No": 0,
+      "Yes": 1
+    },
+    "Family_Income": {
+      "High": 0,
+      "Low": 1,
+      "Medium": 2
+    },
+    "Teacher_Quality": {
+      "High": 0,
+      "Low": 1,
+      "Medium": 2
+    },
+    "School_Type": {
+      "Private": 0,
+      "Public": 1
+    },
+    "Peer_Influence": {
+      "Negative": 0,
+      "Neutral": 1,
+      "Positive": 2
+    },
+    "Learning_Disabilities": {
+      "No": 0,
+      "Yes": 1
+    },
+    "Parental_Education_Level": {
+      "College": 0,
+      "High School": 1,
+      "Postgraduate": 2
+    },
+    "Distance_from_Home": {
+      "Far": 0,
+      "Moderate": 1,
+      "Near": 2
+    },
+    "Gender": {
+      "Female": 0,
+      "Male": 1
+    }
+  },
+  "numerical_features": [
+    "Hours_Studied",
+    "Attendance",
+    "Sleep_Hours",
+    "Previous_Scores",
+    "Tutoring_Sessions",
+    "Physical_Activity"
+  ],
+  "categorical_features": [
+    "Parental_Involvement",
+    "Access_to_Resources",
+    "Extracurricular_Activities",
+    "Motivation_Level",
+    "Internet_Access",
+    "Family_Income",
+    "Teacher_Quality",
+    "School_Type",
+    "Peer_Influence",
+    "Learning_Disabilities",
+    "Parental_Education_Level",
+    "Distance_from_Home",
+    "Gender"
+  ],
+  "metrics": {
+    "mae": 1.0155,
+    "r2": 0.6888
+  }
+}
