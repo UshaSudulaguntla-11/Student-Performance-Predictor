@@ -21,11 +21,6 @@ It combines:
 
 ---
 
-## Deployed Link
-https://student-performance-predictor-production-812b.up.railway.app/
-
----
-
 ## 🎯 Problem Statement
 
 Student performance depends on multiple real-world factors:
