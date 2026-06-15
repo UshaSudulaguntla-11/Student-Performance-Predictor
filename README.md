@@ -117,7 +117,7 @@ Although multiple models were evaluated, **Linear Regression was selected for de
 ```text
 EduPulse/
 │
-├── app.py
+├── main.py
 ├── student_model.pkl
 ├── train_model.py
 ├── requirements.txt
@@ -144,7 +144,7 @@ pip install -r requirements.txt
 
 ### 2️⃣ Run the application
 ```bash
-python app.py
+python main.py
 ```
 
 ### 3️⃣ Open in browser
