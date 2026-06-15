@@ -22,7 +22,7 @@ It combines:
 ---
 
 ## Deployed Link
-https://student-performance-predictor-1-xe1f.onrender.com
+https://student-performance-predictor-production-812b.up.railway.app/
 
 ---
 
