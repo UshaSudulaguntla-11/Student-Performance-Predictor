@@ -21,6 +21,9 @@ It combines:
 
 ---
 
+## Deployed Link
+https://student-performance-predictor-1-xe1f.onrender.com
+
 ## 🎯 Problem Statement
 
 Student performance depends on multiple real-world factors:
